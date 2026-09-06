@@ -1,21 +1,35 @@
 ---
-title: "欢迎使用我的博客"
-subtitle: "由博客助手一键发布"
-date: 2026-09-06T10:00:00+08:00
-lastmod: 2026-09-06T10:00:00+08:00
+title: 欢迎使用我的博客
+subtitle: 由博客助手一键发布
+date: '2026-09-06T10:00:00+08:00'
+lastmod: '2026-09-07T07:56:02+08:00'
 draft: false
-description: "这是博客的第一篇文章，介绍如何使用博客助手发布和管理文章。"
-tags: ["指南", "博客"]
-categories: ["博客使用"]
+authors: []
+description: 这是博客的第一篇文章，介绍如何使用博客助手发布和管理文章。
+tags:
+- 指南
+- 博客
+categories:
+- 博客使用
+series: []
+hiddenFromHomePage: false
+hiddenFromSearch: false
+featuredImage: ''
+featuredImagePreview: ''
 toc:
   enable: true
+math:
+  enable: true
+lightgallery: true
+license: 本文采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/"
+  target="_blank">CC BY-NC 4.0</a> 许可协议，转载请注明出处。
 ---
 
-## 你好，世界
+## 你好，高军军
 
 这是你的第一篇文章。它是由「博客助手」软件自动发布的——你不需要敲任何命令，所有同步工作都由软件完成。
 
-<!--more-->
+<!--more-->````
 
 ## 怎么写文章
 
