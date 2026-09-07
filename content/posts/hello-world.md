@@ -2,7 +2,7 @@
 title: 欢迎使用我的博客
 subtitle: 由博客助手一键发布
 date: '2026-09-06T10:00:00+08:00'
-lastmod: '2026-09-07T20:20:59+08:00'
+lastmod: '2026-09-07T20:25:00+08:00'
 draft: false
 authors: []
 description: 这是博客的第一篇文章，介绍如何使用博客助手发布和管理文章。
@@ -24,18 +24,6 @@ lightgallery: true
 license: 本文采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/"
   target="_blank">CC BY-NC 4.0</a> 许可协议，转载请注明出处。
 ---
-
-```mindmap
-- 中心主题
-  - ![](https://oldergao.github.io/blog-images/images/2026/09/ec79146862e5327e.png) 新节点
-  - 新节点
-*   * - 你在干什么?*
-      - 新节点
-        - 新节点
-```
-
-
-
 
 ## 你好，高军军
 
@@ -99,3 +87,11 @@ $$ E = mc^2 $$
 ---
 
 这篇文章发布成功后，就说明你的博客已经完全正常工作了。你可以在软件里删除它，然后开始写自己的笔记。
+```mindmap
+- 中心主题
+  - ![](https://oldergao.github.io/blog-images/images/2026/09/ec79146862e5327e.png) 新节点
+  - 新节点
+*   * - 你在干什么?
+      - 新节点
+        - 新节点
+```
