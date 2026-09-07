@@ -4,8 +4,30 @@
    =========================================================== */
 
 :root {
-  --bm-accent: #2d8cf0;
-  --bm-accent-soft: rgba(45, 140, 240, 0.12);
+  /* 「夜航」青碧主色（亮色用深 teal，保证对比度） */
+  --bm-accent: #0d9488;
+  --bm-accent-deep: #0f766e;
+  --bm-accent-soft: rgba(13, 148, 136, 0.12);
+  --bm-head: #0f766e;
+  --mm-line: #b6c2cd;
+  --mm-line-strong: #0d9488;
+  --single-link-color: #0d9488;
+  --single-link-hover-color: #115e59;
+  --blockquote-color: #0d9488;
+  --blockquote-bg-color: rgba(13, 148, 136, 0.12);
+}
+html.dark {
+  /* 暗色：亮 teal，作为“夜航”发光强调 */
+  --bm-accent: #2dd4bf;
+  --bm-accent-deep: #14b8a6;
+  --bm-accent-soft: rgba(45, 212, 191, 0.14);
+  --bm-head: #5eead4;
+  --mm-line: #58707f;
+  --mm-line-strong: #2dd4bf;
+  --single-link-color: #2dd4bf;
+  --single-link-hover-color: #5eead4;
+  --blockquote-color: #2dd4bf;
+  --blockquote-bg-color: rgba(45, 212, 191, 0.12);
 }
 
 /* ---------- 正文排版：中文阅读优化 ---------- */
@@ -167,6 +189,13 @@
   overflow: hidden;
 }
 .markmap-svg { display: block; width: 100%; height: 100%; }
+.markmap-svg .markmap-link {
+  fill: none;
+  stroke: var(--mm-line);
+  stroke-width: 1.6px !important;
+  transition: stroke .18s ease;
+}
+.markmap-svg .markmap-link:hover { stroke: var(--mm-line-strong); }
 .markmap-data { display: none !important; }
 .markmap-foreign {
   color: var(--global-font-color);
@@ -184,7 +213,17 @@
   margin: 4px 6px;
   vertical-align: middle;
 }
-.markmap-node-circle { stroke-width: 0 !important; }
+/* 折叠圆点：描边用强调色；展开时空心，折叠/悬停时实心 */
+.markmap-svg .markmap-node circle {
+  fill: var(--global-background-color, #fff);
+  stroke: var(--mm-line-strong) !important;
+  stroke-width: 1.6px !important;
+  transition: fill .15s ease, stroke .15s ease;
+}
+.markmap-svg .markmap-node.markmap-fold circle,
+.markmap-svg .markmap-node circle:hover {
+  fill: var(--mm-line-strong);
+}
 
 /* ---------- mermaid 图容器 ---------- */
 .single .content .mermaid {

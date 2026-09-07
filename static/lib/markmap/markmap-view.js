@@ -930,7 +930,20 @@
   const SELECTOR_NODE = "g.markmap-node";
   const SELECTOR_LINK = "path.markmap-link";
   const SELECTOR_HIGHLIGHT = "g.markmap-highlight";
-  const linkShape = d32.linkHorizontal();
+  // BlogMate：把默认贝塞尔曲线换成「两折正交括号」。
+  // 同一父节点的所有子链接共享同一 source → 折点 x 相同 → 自动汇成一根梳子主干，
+  // 配合节点底部基线，视觉整齐（XMind 风格）。保留 markmap 的折叠/动画机制。
+  const linkShape = (d) => {
+    const s = d.source, t = d.target;
+    const x1 = +s[0], y1 = +s[1], x2 = +t[0], y2 = +t[1];
+    if (x1 === x2 && y1 === y2) {
+      return "M" + x1 + "," + y1 + "L" + x1 + "," + y1 + "L" + x1 + "," + y1 + "L" + x1 + "," + y1;
+    }
+    const dx = x2 - x1;
+    if (dx < 0) return "M" + x1 + "," + y1 + "L" + x2 + "," + y2;
+    const mx = x1 + (dx > 44 ? 22 : dx / 2);
+    return "M" + x1 + "," + y1 + "L" + mx + "," + y1 + "L" + mx + "," + y2 + "L" + x2 + "," + y2;
+  };
   function minBy(numbers, by) {
     const index = d32.minIndex(numbers, by);
     return numbers[index];
