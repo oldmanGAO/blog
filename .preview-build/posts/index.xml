@@ -1,0 +1,10 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>所有文章 - dayByday</title><link>https://oldmanGAO.github.io/blog/posts/</link><description>所有文章 | dayByday</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 06 Sep 2026 10:00:00 +0800</lastBuildDate><atom:link href="https://oldmanGAO.github.io/blog/posts/" rel="self" type="application/rss+xml"/><item><title>欢迎使用我的博客</title><link>https://oldmanGAO.github.io/blog/hello-world/</link><pubDate>Sun, 06 Sep 2026 10:00:00 +0800</pubDate><author><name>作者</name></author><guid>https://oldmanGAO.github.io/blog/hello-world/</guid><description><![CDATA[<div class="markmap-wrap">
+  <svg class="markmap-svg"></svg>
+  <script class="markmap-data" type="text/plain">- 中心主题
+  - ![](../images/u/diagrams/diagram-20260907-194236.png) 新节点
+  - 新节点
+    - 你在干什么?
+      - 新节点
+        - 新节点</script>
+</div><h2 id="你好高军军" class="headerLink">
+    <a href="#%e4%bd%a0%e5%a5%bd%e9%ab%98%e5%86%9b%e5%86%9b" class="header-mark"></a>你好，高军军</h2><p>这是你的第一篇文章。它是由「博客助手」软件自动发布的——你不需要敲任何命令，所有同步工作都由软件完成。</p>]]></description></item></channel></rss>
