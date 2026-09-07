@@ -1,0 +1,5 @@
+<div class="markmap-wrap">
+  <svg class="markmap-svg"></svg>
+  <script class="markmap-data" type="text/plain">{{ .Inner | safeHTML }}</script>
+</div>
+{{- .Page.Scratch.Set "enableMindmap" true -}}

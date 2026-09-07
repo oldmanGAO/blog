@@ -1,0 +1,236 @@
+/* ===========================================================
+   BlogMate 清爽学术风自定义样式
+   复用 DoIt 的 CSS 变量（亮/暗主题自动切换）
+   =========================================================== */
+
+:root {
+  --bm-accent: #2d8cf0;
+  --bm-accent-soft: rgba(45, 140, 240, 0.12);
+}
+
+/* ---------- 正文排版：中文阅读优化 ---------- */
+.single .content {
+  font-size: 16.5px;
+  line-height: 1.95;
+  letter-spacing: 0.012em;
+}
+.single .content p {
+  margin: 0.9em 0;
+}
+.single .content {
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei UI",
+    "Microsoft YaHei", -apple-system, "Segoe UI", sans-serif;
+}
+.single .content code,
+.single .content pre,
+.single .content kbd {
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas,
+    "Courier New", monospace;
+}
+
+/* ---------- 标题：竖线强调 + 层级 ---------- */
+.single .content h1,
+.single .content h2,
+.single .content h3,
+.single .content h4 {
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 1.6em 0 0.7em;
+}
+.single .content h2 {
+  padding-left: 12px;
+  border-left: 5px solid var(--bm-accent);
+  font-size: 1.42em;
+}
+.single .content h3 {
+  padding-left: 10px;
+  border-left: 4px solid var(--bm-accent-soft);
+  font-size: 1.2em;
+}
+.single-title {
+  letter-spacing: 0.01em;
+  padding-bottom: 0.35em;
+  border-bottom: 2px solid var(--global-border-color);
+}
+
+/* ---------- 链接 ---------- */
+.single .content a {
+  color: var(--single-link-color, var(--bm-accent));
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color .15s ease, color .15s ease;
+}
+.single .content a:hover {
+  border-bottom-color: var(--single-link-color, var(--bm-accent));
+}
+
+/* ---------- 行内代码 ---------- */
+.single .content :not(pre) > code {
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 0.88em;
+  background: var(--inline-code-background-color, var(--code-background-color));
+  color: var(--code-color);
+  word-break: break-word;
+}
+
+/* ---------- 代码块：圆角 + 柔阴影 + mac 圆点 ---------- */
+.single .content .code-block,
+.single .content .highlight:not(.code-block) {
+  border-radius: 12px;
+  box-shadow: 0 6px 22px rgba(30, 60, 90, 0.10);
+  overflow: hidden;
+  border: 1px solid var(--global-border-color);
+  margin: 1.3em 0;
+}
+.single .content .code-block { position: relative; }
+.single .content .code-block .chroma,
+.single .content .code-block pre {
+  border-radius: 0 0 12px 12px;
+}
+.single .content .code-block.code-block {
+  /* 把标题栏让给 mac 圆点 */
+}
+.single .content .code-block > div:first-child {
+  padding-left: 54px;
+  position: relative;
+}
+.single .content .code-block::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  left: 17px;
+  top: 13px;
+  width: 34px;
+  height: 12px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle 5.5px at 6px 6px, #ff5f57 99%, transparent 100%),
+    radial-gradient(circle 5.5px at 17px 6px, #febc2e 99%, transparent 100%),
+    radial-gradient(circle 5.5px at 28px 6px, #28c840 99%, transparent 100%);
+}
+
+/* ---------- 引用块：浅色底 + 竖条 ---------- */
+.single .content blockquote {
+  margin: 1.2em 0;
+  padding: 0.6em 1.1em;
+  border-left: 4px solid var(--bm-accent);
+  border-radius: 0 10px 10px 0;
+  background: var(--blockquote-bg-color, var(--bm-accent-soft));
+  color: var(--global-font-secondary-color);
+}
+.single .content blockquote p { margin: 0.4em 0; }
+
+/* ---------- 表格 ---------- */
+.single .content table {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(30, 60, 90, 0.06);
+  margin: 1.2em 0;
+}
+.single .content thead {
+  background: var(--table-thead-color);
+}
+
+/* ---------- 标签 / 分类胶囊 ---------- */
+.post-tags a,
+.post-meta .post-category a,
+.term-tags-cloud a {
+  display: inline-block;
+  padding: 3px 12px;
+  margin: 2px 4px 2px 0;
+  border-radius: 999px;
+  font-size: 0.86em;
+  background: var(--bm-accent-soft);
+  color: var(--single-link-color, var(--bm-accent)) !important;
+  border: none !important;
+  transition: transform .12s ease, background .12s ease;
+}
+.post-tags a:hover,
+.post-meta .post-category a:hover {
+  transform: translateY(-1px);
+  background: var(--bm-accent);
+  color: #fff !important;
+}
+
+/* ---------- 逻辑图（markmap）容器 ---------- */
+.markmap-wrap {
+  position: relative;
+  width: 100%;
+  height: min(78vh, 620px);
+  min-height: 360px;
+  margin: 1.3em 0;
+  border: 1px solid var(--global-border-color);
+  border-radius: 14px;
+  background: var(--global-background-color);
+  box-shadow: 0 6px 22px rgba(30, 60, 90, 0.10);
+  overflow: hidden;
+}
+.markmap-svg { display: block; width: 100%; height: 100%; }
+.markmap-data { display: none !important; }
+.markmap-foreign {
+  color: var(--global-font-color);
+  font-size: 15px;
+}
+.markmap-foreign a {
+  color: var(--single-link-color, var(--bm-accent));
+  text-decoration: none;
+  border-bottom: 1px dashed var(--single-link-color, var(--bm-accent));
+}
+.markmap-foreign img {
+  max-height: 96px;
+  max-width: 200px;
+  border-radius: 8px;
+  margin: 2px 4px;
+  vertical-align: middle;
+}
+.markmap-node-circle { stroke-width: 0 !important; }
+
+/* ---------- mermaid 图容器 ---------- */
+.single .content .mermaid {
+  background: var(--global-background-color);
+  border: 1px solid var(--global-border-color);
+  border-radius: 12px;
+  padding: 14px;
+  margin: 1.3em 0;
+  box-shadow: 0 4px 16px rgba(30, 60, 90, 0.07);
+  text-align: center;
+}
+
+/* ---------- KaTeX 数学公式：避免上标/下标被行高截断 ---------- */
+.single .content .katex { line-height: 1.6; }
+.single .content .katex-display {
+  margin: 1em 0;
+  padding: 0.4em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+/* 给 sup/sub 留额外纵向空间，防止与行高冲突被遮挡 */
+.single .content .katex .msup > .vlist,
+.single .content .katex .msub > .vlist {
+  margin-top: 0 !important;
+}
+.single .content .katex sup,
+.single .content .katex sub {
+  vertical-align: baseline !important;
+  position: relative;
+}
+.single .content .katex sup { top: -0.45em; }
+.single .content .katex sub { bottom: -0.25em; }
+
+/* ---------- 图片圆角 ---------- */
+.single .content img {
+  border-radius: 8px;
+}
+
+/* ---------- 首页文章列表：悬停上浮 ---------- */
+.archive-item,
+.article-list article,
+.post-list-item {
+  transition: transform .15s ease, box-shadow .15s ease;
+  border-radius: 10px;
+}
+.archive-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 60, 90, 0.10);
+}

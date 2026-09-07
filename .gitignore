@@ -6,3 +6,6 @@ resources/_gen/
 # 系统文件
 .DS_Store
 Thumbs.db
+# 博客助手自动补充
+static/images/u/
+.preview-server.log

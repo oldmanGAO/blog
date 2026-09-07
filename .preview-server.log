@@ -1,4 +1,4 @@
-Watching for changes in D:/boke/archetypes, D:/boke/content/posts, D:/boke/static, D:/boke/themes/DoIt/archetypes, D:/boke/themes/DoIt/assets/{css,data,images,js,lib,...}, D:/boke/themes/DoIt/i18n, D:/boke/themes/DoIt/layouts/{_markup,_partials,_shortcodes,posts}, D:/boke/themes/DoIt/static/lib
+Watching for changes in D:/boke/archetypes, D:/boke/content/posts, D:/boke/layouts/{_markup,_partials}, D:/boke/static/{css,images,lib}, D:/boke/themes/DoIt/archetypes, D:/boke/themes/DoIt/assets/{css,data,images,js,lib,...}, D:/boke/themes/DoIt/i18n, D:/boke/themes/DoIt/layouts/{_markup,_partials,_shortcodes,posts}, D:/boke/themes/DoIt/static/lib
 Watching for config changes in D:\boke\config.toml
 Start building sites … 
 hugo v0.165.0-76a5e1880ab46688155b02e99bab9be2a6134492+extended windows/amd64 BuildDate=2026-08-12T14:26:28Z VendorInfo=gohugoio
@@ -11,14 +11,22 @@ WARN  Current environment is "development". The "comment system", "PWA", "CDN" a
  Pages            │      26 
  Paginator pages  │       0 
  Non-page files   │       0 
- Static files     │      69 
+ Static files     │      75 
  Processed images │       0 
  Aliases          │       5 
  Cleaned          │       0 
 
-Built in 165 ms
+Built in 97 ms
 Environment: "development"
 Serving pages from disk
 Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
 Web Server is available at http://127.0.0.1:13980/ (bind address 127.0.0.1) 
 Press Ctrl+C to stop
+
+Change detected, rebuilding site (#1).
+2026-09-07 13:44:45.651 +0800
+Source changed /posts/hello-world.md
+WARN  Current environment is "development". The "comment system", "PWA", "CDN" and "fingerprint" will be disabled.
+当前运行环境是 "development". "评论系统", "PWA", "CDN" 和 "fingerprint" 不会启用.
+Web Server is available at http://127.0.0.1:13980/ (bind address 127.0.0.1)
+Total in 16 ms

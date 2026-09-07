@@ -5,7 +5,10 @@ title = "dayByday"
 theme = "DoIt"
 
 enableRobotsTXT = true
-enableGitInfo = true
+# v1.6：关闭 GitInfo。学习笔记博客用文件 mtime 作为 lastmod 即可，避免本地预览/
+# 构建时「仓库无 commit」导致 Hugo 报错退出。学习笔记博客不需要从 commit 时间戳
+# 取最后修改时间，已推送过的老博客可在 PushHub 端保留默认开启。
+enableGitInfo = false
 enableEmoji = true
 paginate = 12
 rssLimit = 20
@@ -68,7 +71,7 @@ rssLimit = 20
   [params.app]
     title = "dayByday"
     svgFavicon = "/favicon.svg"
-    iconColor = "#5bbad5"
+    iconColor = "#2d8cf0"
     tileColor = "#2d8cf0"
 
   # 搜索（fuse：纯本地搜索，无需任何外部服务）
@@ -163,10 +166,33 @@ rssLimit = 20
     Bilibili = ""
 
 # 导航菜单
+# 主菜单（由博客助手自动管理）
 [[menu.main]]
   name = "首页"
   url = "/"
   weight = 1
+[[menu.main]]
+  name = "文章"
+  url = "/posts/"
+  weight = 2
+  pre = '<i class="fas fa-fw fa-book-open"></i>'
+[[menu.main]]
+  name = "标签"
+  url = "/tags/"
+  weight = 3
+  pre = '<i class="fas fa-fw fa-tags"></i>'
+[[menu.main]]
+  name = "分类"
+  url = "/categories/"
+  weight = 4
+  pre = '<i class="fas fa-fw fa-folder"></i>'
+[[menu.main]]
+  name = "关于"
+  url = "/about/"
+  weight = 5
+  pre = '<i class="fas fa-fw fa-circle-info"></i>'
+
+
 [[menu.main]]
   name = "文章"
   url = "/posts/"
