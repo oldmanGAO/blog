@@ -16,7 +16,7 @@ WARN  Current environment is "development". The "comment system", "PWA", "CDN" a
  Aliases          │       5 
  Cleaned          │       0 
 
-Built in 164 ms
+Built in 222 ms
 Environment: "development"
 Serving pages from disk
 Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
