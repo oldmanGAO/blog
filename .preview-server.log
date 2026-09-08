@@ -16,9 +16,25 @@ WARN  Current environment is "development". The "comment system", "PWA", "CDN" a
  Aliases          │       5 
  Cleaned          │       0 
 
-Built in 222 ms
+Built in 223 ms
 Environment: "development"
 Serving pages from disk
 Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
 Web Server is available at http://127.0.0.1:13980/ (bind address 127.0.0.1) 
 Press Ctrl+C to stop
+
+Change detected, rebuilding site (#1).
+2026-09-08 08:12:12.409 +0800
+Source changed /posts/hello-world.md
+WARN  Current environment is "development". The "comment system", "PWA", "CDN" and "fingerprint" will be disabled.
+当前运行环境是 "development". "评论系统", "PWA", "CDN" 和 "fingerprint" 不会启用.
+Web Server is available at http://127.0.0.1:13980/ (bind address 127.0.0.1)
+Total in 13 ms
+
+Change detected, rebuilding site (#2).
+2026-09-08 08:12:12.908 +0800
+Source changed /posts/hello-world.md
+WARN  Current environment is "development". The "comment system", "PWA", "CDN" and "fingerprint" will be disabled.
+当前运行环境是 "development". "评论系统", "PWA", "CDN" 和 "fingerprint" 不会启用.
+Web Server is available at http://127.0.0.1:13980/ (bind address 127.0.0.1)
+Total in 11 ms
