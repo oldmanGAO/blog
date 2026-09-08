@@ -2,7 +2,7 @@
 title: Java 学习笔记（完整版）
 subtitle: ''
 date: '2026-09-08T08:33:29+08:00'
-lastmod: '2026-09-08T08:34:32+08:00'
+lastmod: '2026-09-08T10:16:57+08:00'
 draft: false
 authors: []
 description: java基础
@@ -24,7 +24,7 @@ license: 本文采用 <a rel="license" href="https://creativecommons.org/license
   target="_blank">CC BY-NC 4.0</a> 许可协议，转载请注明出处。
 ---
 
-# Java 学习笔记（完整版）
+## # Java 学习笔记（完整版）
 
 > 本文件由 `合并笔记.py` 将 23 个分章笔记与练习附录自动合并而成，
 > 内容与分章文件一致；如需修改，请改分章文件后重新运行脚本。
