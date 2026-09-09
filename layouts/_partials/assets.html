@@ -367,6 +367,45 @@
     {{- partial "plugin/style.html" . -}}
 {{- end -}}
 
+{{/*  拾墨知识库：运行时把正文中的 [[笔记名]] 转成站内链接，不改写 Markdown 源文件 */}}
+{{- $wikiIndex := dict -}}
+{{- range .Site.RegularPages -}}
+    {{- $wikiIndex = merge $wikiIndex (dict (.Title | lower) .RelPermalink) -}}
+    {{- $wikiIndex = merge $wikiIndex (dict (.File.ContentBaseName | lower) .RelPermalink) -}}
+{{- end -}}
+<script>
+(function () {
+  var index = {{ $wikiIndex | jsonify | safeJS }};
+  var re = /\\[\\[([^\\]|#]+)(?:#[^\\]|]*)?(?:\\|([^\\]]+))?\\]\\]/g;
+  function walk(root) {
+    var nodes = [], w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    var n; while ((n = w.nextNode())) {
+      var p = n.parentElement;
+      if (p && !p.closest('pre,code,script,style,a')) nodes.push(n);
+    }
+    nodes.forEach(function (node) {
+      if (!re.test(node.nodeValue)) { re.lastIndex = 0; return; }
+      re.lastIndex = 0;
+      var frag = document.createDocumentFragment(), text = node.nodeValue, last = 0, m;
+      while ((m = re.exec(text))) {
+        frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        var key = m[1].trim().toLowerCase(), href = index[key];
+        if (href) {
+          var a = document.createElement('a'); a.href = href;
+          a.className = 'wiki-link'; a.textContent = m[2] ? m[2].trim() : m[1].trim();
+          frag.appendChild(a);
+        } else frag.appendChild(document.createTextNode(m[0]));
+        last = m.index + m[0].length;
+      }
+      frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+  function run() { var root = document.querySelector('#content'); if (root) walk(root); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
+})();
+</script>
+
 {{/*  Config script  */}}
 <script>
     {{- $config | jsonify | printf "window.config=%s;" | safeJS -}}
