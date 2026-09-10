@@ -2,7 +2,7 @@
 title: Java习题精讲-完整版
 subtitle: ''
 date: '2026-09-09T22:00:59+08:00'
-lastmod: '2026-09-09T22:00:59+08:00'
+lastmod: '2026-09-10T08:18:28+08:00'
 draft: false
 authors: []
 description: ''
@@ -16,7 +16,7 @@ featuredImagePreview: ''
 toc:
   enable: true
 math:
-  enable: false
+  enable: true
 lightgallery: true
 license: 本文采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/"
   target="_blank">CC BY-NC 4.0</a> 许可协议，转载请注明出处。

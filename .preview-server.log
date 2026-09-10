@@ -8,7 +8,7 @@ WARN  Current environment is "development". The "comment system", "PWA", "CDN" a
 
                   │ ZH - CN 
 ──────────────────┼─────────
- Pages            │      24 
+ Pages            │      26 
  Paginator pages  │       0 
  Non-page files   │       0 
  Static files     │      85 
@@ -16,7 +16,7 @@ WARN  Current environment is "development". The "comment system", "PWA", "CDN" a
  Aliases          │       4 
  Cleaned          │       0 
 
-Built in 5652 ms
+Built in 2859 ms
 Environment: "development"
 Serving pages from disk
 Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
