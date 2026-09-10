@@ -2,7 +2,7 @@
 title: Java 学习笔记（完整版）
 subtitle: ''
 date: '2026-09-08T08:33:29+08:00'
-lastmod: '2026-09-10T08:55:08+08:00'
+lastmod: '2026-09-10T09:44:47+08:00'
 draft: false
 authors: []
 description: java基础
@@ -30,7 +30,7 @@ license: 本文采用 <a rel="license" href="https://creativecommons.org/license
 > 内容与分章文件一致；如需修改，请改分章文件后重新运行脚本。
 
 ![图片](https://oldergao.github.io/blog-images/images/2026/09/e89592046fb9bb0d.png)
-22
+
 
 共 24 章，涵盖 JavaSE 基础与进阶全部知识点。
 
