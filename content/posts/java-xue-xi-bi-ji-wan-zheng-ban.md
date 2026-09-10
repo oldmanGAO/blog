@@ -2,7 +2,7 @@
 title: Java 学习笔记（完整版）
 subtitle: ''
 date: '2026-09-08T08:33:29+08:00'
-lastmod: '2026-09-10T08:19:01+08:00'
+lastmod: '2026-09-10T08:28:57+08:00'
 draft: false
 authors: []
 description: java基础
@@ -28,7 +28,7 @@ license: 本文采用 <a rel="license" href="https://creativecommons.org/license
 
 > 本文件由 `合并笔记.py` 将 23 个分章笔记与练习附录自动合并而成，
 > 内容与分章文件一致；如需修改，请改分章文件后重新运行脚本。
-![图片](../images/u/java-xue-xi-bi-ji-wan-zheng-ban/img-20260910-081856.png)
+
 
 
 共 24 章，涵盖 JavaSE 基础与进阶全部知识点。
