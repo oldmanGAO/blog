@@ -68,40 +68,6 @@
     {{- $config = dict "selector" ".lightgallery" "speed" 400 "hideBarsDelay" 2000 "thumbnail" true "exThumbImage" "data-thumbnail" "thumbWidth" 80 "thumbContHeight" 80 "actualSize" false | dict "lightGallery" | merge $config -}}
 {{- end -}}
 
-{{- /* 代码块一键复制：mac 圆点旁浮一个 ⧉ 图标，hover 出现，点后弹「已复制」 */ -}}
-<style>
-.code-block { position: relative; }
-.code-block > .code-copy { position:absolute; top:8px; right:10px; z-index:5; width:26px; height:26px; padding:0; border:none; border-radius:6px; background:transparent; color:rgba(255,255,255,.55); cursor:pointer; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .15s,color .15s,background .15s; font-size:14px; line-height:1; }
-.code-block:hover > .code-copy { opacity:1; }
-.code-block > .code-copy:hover { color:#fff; background:rgba(255,255,255,.12); }
-.code-block > .code-copy.copied { color:#5eead4; opacity:1; }
-.code-block > .code-copy:focus-visible { outline:2px solid var(--single-link-color,#0d9488); outline-offset:1px; opacity:1; }
-@media (max-width:720px) { .code-block > .code-copy { opacity:1; } }
-</style>
-<script>
-(function () {
-  function copyText(text) {
-    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
-    var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); } catch (e) {}
-    document.body.removeChild(ta);
-  }
-  function init() {
-    document.querySelectorAll('.code-block').forEach(function (block) {
-      if (block.querySelector('.code-copy')) return;
-      var btn=document.createElement('button'); btn.type='button'; btn.className='code-copy'; btn.setAttribute('aria-label','复制代码'); btn.title='复制代码'; btn.textContent='⧉';
-      btn.addEventListener('click', function () {
-        var code=block.querySelector('pre code, pre'); copyText(code ? code.innerText : block.innerText);
-        btn.classList.add('copied'); btn.title='已复制';
-        setTimeout(function () { btn.classList.remove('copied'); btn.title='复制代码'; }, 1500);
-      });
-      block.appendChild(btn);
-    });
-  }
-  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
-})();
-</script>
-
 {{- /* Sharer.js */ -}}
 {{- if $params.share.enable | and (.Scratch.Get "enableSharer") -}}
     {{- $source := $cdn.sharerJS | default "lib/sharer/sharer.min.js" -}}
