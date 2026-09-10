@@ -144,108 +144,55 @@
     {{- $config = dict "strict" false "delimiters" $delimiters | dict "math" | merge $config -}}
 {{- end -}}
 
-{{- /* mermaid（本地 UMD，不走 CDN；滚动到图才加载，不阻塞首屏） */ -}}
+{{- /* mermaid：优先国内镜像 npmmirror（GitHub Pages 国内常常几 KB/s），
+     加载失败自动回退本地同版本文件。版本锁 10.9.1，与本地一致。 */ -}}
 {{- if .Scratch.Get "enableMermaid" -}}
+<script src="https://registry.npmmirror.com/mermaid/10.9.1/files/dist/mermaid.min.js"
+        onerror="this.onerror=null;this.src='{{ `lib/mermaid/mermaid.min.js` | relURL }}';"></script>
 <script>
-(function () {
-  function loadMermaid() {
-    var s = document.createElement('script');
-    s.src = '{{ "lib/mermaid/mermaid.min.js" | relURL }}';
-    s.onload = function () {
-      if (!window.mermaid) return;
-      try {
-        mermaid.initialize({ startOnLoad: false, securityLevel: 'loose',
-          theme: (document.body && document.body.getAttribute('theme') === 'dark') ? 'dark' : 'default' });
-        mermaid.run({ querySelector: '.mermaid' });
-      } catch (e) { console.error(e); }
-    };
-    document.body.appendChild(s);
-  }
-  var els = document.querySelectorAll('.mermaid');
-  if (!els.length) return;
-  var started = false;
-  function start() {
-    if (started) return;
-    started = true;
-    loadMermaid();
-  }
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { io.disconnect(); start(); }
-      });
-    }, { rootMargin: '300px' });
-    els.forEach(function (el) { io.observe(el); });
-    // 兜底：5s 仍未进入视口则强制加载（防 IO 边缘情况），started 防重复
-    setTimeout(function () { io.disconnect(); start(); }, 5000);
-  } else {
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-    else start();
-  }
-})();
+  (function () {
+    if (!window.mermaid) return;
+    mermaid.initialize({ startOnLoad: false, securityLevel: 'loose',
+      theme: (document.body.getAttribute('theme') === 'dark') ? 'dark' : 'default' });
+    function runMermaid() {
+      try { mermaid.run({ querySelector: '.mermaid' }); } catch (e) { console.error(e); }
+    }
+    if (document.readyState !== 'loading') runMermaid();
+    else document.addEventListener('DOMContentLoaded', runMermaid);
+  })();
 </script>
 {{- end -}}
 
-{{- /* markmap 逻辑图（本地 UMD，不走 CDN；滚动到图才加载） */ -}}
+{{- /* markmap 逻辑图：d3 与 markmap-lib 走国内镜像（失败回退本地），
+     markmap-view 保持本地（已被本项目改造为两折正交括号连线，不能用上游版）。 */ -}}
 {{- if .Scratch.Get "enableMindmap" -}}
+<script src="https://registry.npmmirror.com/d3/7.9.0/files/dist/d3.min.js"
+        onerror="this.onerror=null;this.src='{{ `lib/markmap/d3.min.js` | relURL }}';"></script>
+<script src="{{ `lib/markmap/markmap-view.js` | relURL }}"></script>
+<script src="https://registry.npmmirror.com/markmap-lib/0.18.12/files/dist/browser/index.iife.js"
+        onerror="this.onerror=null;this.src='{{ `lib/markmap/markmap-lib.js` | relURL }}';"></script>
 <script>
-(function () {
-  function loadScripts(srcs, done) {
-    var i = 0;
-    function next() {
-      if (i >= srcs.length) { if (done) done(); return; }
-      var s = document.createElement('script');
-      s.src = srcs[i++];
-      s.onload = next;
-      s.onerror = next;
-      document.body.appendChild(s);
-    }
-    next();
-  }
-  function renderMindmaps() {
-    if (!window.markmap || !window.markmap.Transformer || !window.markmap.Markmap) return;
-    var transformer = new markmap.Transformer();
-    document.querySelectorAll('.markmap-wrap').forEach(function (wrap) {
-      var svg = wrap.querySelector('svg.markmap-svg');
-      var dataEl = wrap.querySelector('script.markmap-data');
-      if (!svg || svg.getAttribute('data-rendered')) return;
-      svg.setAttribute('data-rendered', '1');
-      var md = dataEl ? dataEl.textContent : '';
-      try {
-        var data = transformer.transform(md);
-        markmap.Markmap.create(svg, markmap.deriveOptions({
-          colorFreezeLevel: 2, initialExpandLevel: -1, duration: 300, maxWidth: 280
-        }), data.root);
-      } catch (e) { console.error(e); }
-    });
-  }
-  var wraps = document.querySelectorAll('.markmap-wrap');
-  if (!wraps.length) return;
-  var srcs = [
-    '{{ "lib/markmap/d3.min.js" | relURL }}',
-    '{{ "lib/markmap/markmap-view.js" | relURL }}',
-    '{{ "lib/markmap/markmap-lib.js" | relURL }}'
-  ];
-  function load() { loadScripts(srcs, renderMindmaps); }
-  var started = false;
-  function start() {
-    if (started) return;
-    started = true;
-    load();
-  }
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { io.disconnect(); start(); }
+  (function () {
+    function renderMindmaps() {
+      if (!window.markmap || !window.markmap.Transformer || !window.markmap.Markmap) return;
+      var transformer = new markmap.Transformer();
+      document.querySelectorAll('.markmap-wrap').forEach(function (wrap) {
+        var svg = wrap.querySelector('svg.markmap-svg');
+        var dataEl = wrap.querySelector('script.markmap-data');
+        if (!svg || svg.getAttribute('data-rendered')) return;
+        svg.setAttribute('data-rendered', '1');
+        var md = dataEl ? dataEl.textContent : '';
+        try {
+          var data = transformer.transform(md);
+          markmap.Markmap.create(svg, markmap.deriveOptions({
+            colorFreezeLevel: 2, initialExpandLevel: -1, duration: 300, maxWidth: 280
+          }), data.root);
+        } catch (e) { console.error(e); }
       });
-    }, { rootMargin: '300px' });
-    wraps.forEach(function (el) { io.observe(el); });
-    setTimeout(function () { io.disconnect(); start(); }, 5000);
-  } else {
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-    else start();
-  }
-})();
+    }
+    if (document.readyState !== 'loading') renderMindmaps();
+    else document.addEventListener('DOMContentLoaded', renderMindmaps);
+  })();
 </script>
 {{- end -}}
 
