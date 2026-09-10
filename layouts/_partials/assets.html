@@ -55,7 +55,7 @@
     {{- dict "Resource" $js "Fingerprint" $fingerprint "Defer" true | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
 {{- end -}}
 
-{{- /* lightgallery.js */ -}}
+{{- /* lightgallery：图片点击放大 + 缩略图条 + 左右切图 + Esc 关闭 */ -}}
 {{- if $params.lightgallery -}}
     {{- $source := $cdn.lightgalleryCSS | default "lib/lightgallery/lightgallery.min.css" -}}
     {{- dict "Source" $source "Fingerprint" $fingerprint "Defer" true | dict "Scratch" .Scratch "Data" | partial "scratch/style.html" -}}
@@ -67,6 +67,40 @@
     {{- dict "Source" $source "Fingerprint" $fingerprint "Defer" true | dict "Scratch" .Scratch "Data" | partial "scratch/script.html" -}}
     {{- $config = dict "selector" ".lightgallery" "speed" 400 "hideBarsDelay" 2000 "thumbnail" true "exThumbImage" "data-thumbnail" "thumbWidth" 80 "thumbContHeight" 80 "actualSize" false | dict "lightGallery" | merge $config -}}
 {{- end -}}
+
+{{- /* 代码块一键复制：mac 圆点旁浮一个 ⧉ 图标，hover 出现，点后弹「已复制」 */ -}}
+<style>
+.code-block { position: relative; }
+.code-block > .code-copy { position:absolute; top:8px; right:10px; z-index:5; width:26px; height:26px; padding:0; border:none; border-radius:6px; background:transparent; color:rgba(255,255,255,.55); cursor:pointer; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .15s,color .15s,background .15s; font-size:14px; line-height:1; }
+.code-block:hover > .code-copy { opacity:1; }
+.code-block > .code-copy:hover { color:#fff; background:rgba(255,255,255,.12); }
+.code-block > .code-copy.copied { color:#5eead4; opacity:1; }
+.code-block > .code-copy:focus-visible { outline:2px solid var(--single-link-color,#0d9488); outline-offset:1px; opacity:1; }
+@media (max-width:720px) { .code-block > .code-copy { opacity:1; } }
+</style>
+<script>
+(function () {
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  function init() {
+    document.querySelectorAll('.code-block').forEach(function (block) {
+      if (block.querySelector('.code-copy')) return;
+      var btn=document.createElement('button'); btn.type='button'; btn.className='code-copy'; btn.setAttribute('aria-label','复制代码'); btn.title='复制代码'; btn.textContent='⧉';
+      btn.addEventListener('click', function () {
+        var code=block.querySelector('pre code, pre'); copyText(code ? code.innerText : block.innerText);
+        btn.classList.add('copied'); btn.title='已复制';
+        setTimeout(function () { btn.classList.remove('copied'); btn.title='复制代码'; }, 1500);
+      });
+      block.appendChild(btn);
+    });
+  }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+</script>
 
 {{- /* Sharer.js */ -}}
 {{- if $params.share.enable | and (.Scratch.Get "enableSharer") -}}
@@ -144,50 +178,108 @@
     {{- $config = dict "strict" false "delimiters" $delimiters | dict "math" | merge $config -}}
 {{- end -}}
 
-{{- /* mermaid（本地 UMD，不走 CDN） */ -}}
+{{- /* mermaid（本地 UMD，不走 CDN；滚动到图才加载，不阻塞首屏） */ -}}
 {{- if .Scratch.Get "enableMermaid" -}}
-<script src="{{ `lib/mermaid/mermaid.min.js` | relURL }}"></script>
 <script>
-  (function () {
-    if (!window.mermaid) return;
-    mermaid.initialize({ startOnLoad: false, securityLevel: 'loose',
-      theme: (window.theme === 'dark' ? 'dark' : 'default') });
-    function runMermaid() {
-      try { mermaid.run({ querySelector: '.mermaid' }); } catch (e) { console.error(e); }
-    }
-    if (document.readyState !== 'loading') runMermaid();
-    else document.addEventListener('DOMContentLoaded', runMermaid);
-  })();
+(function () {
+  function loadMermaid() {
+    var s = document.createElement('script');
+    s.src = '{{ "lib/mermaid/mermaid.min.js" | relURL }}';
+    s.onload = function () {
+      if (!window.mermaid) return;
+      try {
+        mermaid.initialize({ startOnLoad: false, securityLevel: 'loose',
+          theme: (document.body && document.body.getAttribute('theme') === 'dark') ? 'dark' : 'default' });
+        mermaid.run({ querySelector: '.mermaid' });
+      } catch (e) { console.error(e); }
+    };
+    document.body.appendChild(s);
+  }
+  var els = document.querySelectorAll('.mermaid');
+  if (!els.length) return;
+  var started = false;
+  function start() {
+    if (started) return;
+    started = true;
+    loadMermaid();
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { io.disconnect(); start(); }
+      });
+    }, { rootMargin: '300px' });
+    els.forEach(function (el) { io.observe(el); });
+    // 兜底：5s 仍未进入视口则强制加载（防 IO 边缘情况），started 防重复
+    setTimeout(function () { io.disconnect(); start(); }, 5000);
+  } else {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+    else start();
+  }
+})();
 </script>
 {{- end -}}
 
-{{- /* markmap 逻辑图（本地 UMD，不走 CDN） */ -}}
+{{- /* markmap 逻辑图（本地 UMD，不走 CDN；滚动到图才加载） */ -}}
 {{- if .Scratch.Get "enableMindmap" -}}
-<script src="{{ `lib/markmap/d3.min.js` | relURL }}"></script>
-<script src="{{ `lib/markmap/markmap-view.js` | relURL }}"></script>
-<script src="{{ `lib/markmap/markmap-lib.js` | relURL }}"></script>
 <script>
-  (function () {
-    function renderMindmaps() {
-      if (!window.markmap || !window.markmap.Transformer || !window.markmap.Markmap) return;
-      var transformer = new markmap.Transformer();
-      document.querySelectorAll('.markmap-wrap').forEach(function (wrap) {
-        var svg = wrap.querySelector('svg.markmap-svg');
-        var dataEl = wrap.querySelector('script.markmap-data');
-        if (!svg || svg.getAttribute('data-rendered')) return;
-        svg.setAttribute('data-rendered', '1');
-        var md = dataEl ? dataEl.textContent : '';
-        try {
-          var data = transformer.transform(md);
-          markmap.Markmap.create(svg, markmap.deriveOptions({
-            colorFreezeLevel: 2, initialExpandLevel: -1, duration: 300, maxWidth: 280
-          }), data.root);
-        } catch (e) { console.error(e); }
-      });
+(function () {
+  function loadScripts(srcs, done) {
+    var i = 0;
+    function next() {
+      if (i >= srcs.length) { if (done) done(); return; }
+      var s = document.createElement('script');
+      s.src = srcs[i++];
+      s.onload = next;
+      s.onerror = next;
+      document.body.appendChild(s);
     }
-    if (document.readyState !== 'loading') renderMindmaps();
-    else document.addEventListener('DOMContentLoaded', renderMindmaps);
-  })();
+    next();
+  }
+  function renderMindmaps() {
+    if (!window.markmap || !window.markmap.Transformer || !window.markmap.Markmap) return;
+    var transformer = new markmap.Transformer();
+    document.querySelectorAll('.markmap-wrap').forEach(function (wrap) {
+      var svg = wrap.querySelector('svg.markmap-svg');
+      var dataEl = wrap.querySelector('script.markmap-data');
+      if (!svg || svg.getAttribute('data-rendered')) return;
+      svg.setAttribute('data-rendered', '1');
+      var md = dataEl ? dataEl.textContent : '';
+      try {
+        var data = transformer.transform(md);
+        markmap.Markmap.create(svg, markmap.deriveOptions({
+          colorFreezeLevel: 2, initialExpandLevel: -1, duration: 300, maxWidth: 280
+        }), data.root);
+      } catch (e) { console.error(e); }
+    });
+  }
+  var wraps = document.querySelectorAll('.markmap-wrap');
+  if (!wraps.length) return;
+  var srcs = [
+    '{{ "lib/markmap/d3.min.js" | relURL }}',
+    '{{ "lib/markmap/markmap-view.js" | relURL }}',
+    '{{ "lib/markmap/markmap-lib.js" | relURL }}'
+  ];
+  function load() { loadScripts(srcs, renderMindmaps); }
+  var started = false;
+  function start() {
+    if (started) return;
+    started = true;
+    load();
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { io.disconnect(); start(); }
+      });
+    }, { rootMargin: '300px' });
+    wraps.forEach(function (el) { io.observe(el); });
+    setTimeout(function () { io.disconnect(); start(); }, 5000);
+  } else {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+    else start();
+  }
+})();
 </script>
 {{- end -}}
 
