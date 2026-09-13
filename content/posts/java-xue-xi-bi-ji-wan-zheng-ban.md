@@ -2,7 +2,7 @@
 title: Java 学习笔记（完整版）
 subtitle: ''
 date: '2026-09-08T08:33:29+08:00'
-lastmod: '2026-09-10T10:33:09+08:00'
+lastmod: '2026-09-14T07:56:38+08:00'
 draft: false
 authors: []
 description: java基础
@@ -24,15 +24,7 @@ license: 本文采用 <a rel="license" href="https://creativecommons.org/license
   target="_blank">CC BY-NC 4.0</a> 许可协议，转载请注明出处。
 ---
 
-##  Java 学习笔记（完整版）
-
-> 本文件由 `合并笔记.py` 将 23 个分章笔记与练习附录自动合并而成，
-> 内容与分章文件一致；如需修改，请改分章文件后重新运行脚本。
-
-共 24 章，涵盖 JavaSE 基础与进阶全部知识点。
-
 ## 目录
-
 - **第一部分 · Java 基础**
   - [第1章 Java开发环境与IDEA](#第1章-java开发环境与idea)
   - [第2章 Java基础语法](#第2章-java基础语法)
@@ -64,7 +56,6 @@ license: 本文采用 <a rel="license" href="https://creativecommons.org/license
   - [附录 A 练习题与参考答案](#附录-a-练习题与参考答案)
 
 ---
-
 # 第一部分 · Java 基础
 
 <div style="page-break-after: always;"></div>
@@ -215,7 +206,7 @@ public class HelloWorld {
 
 #### 编程语言发展历程
 
-计算机底层是硬件电路，通过通电（1）和不通电（0）表示数据，所以计算机只认识由 0 和 1 组成的**机器语言**（如 `00011100 00110101`）。编程语言经历了三个阶段：
+计算机底层是硬件电路，通过通电（1）和不通电（0）表示数据，所以计算机只认识由 0 和 1 组成的**机器语言**（如 `00011100 00110101`）。编程语言经历了三个阶段.
 
 | 阶段 | 特点 |
 | --- | --- |
