@@ -1,8 +1,8 @@
 ---
-title: Java 学习笔记（完整版）
+title: Java 学习笔记
 subtitle: ''
 date: '2026-09-08T08:33:29+08:00'
-lastmod: '2026-09-14T07:56:38+08:00'
+lastmod: '2026-09-14T08:45:49+08:00'
 draft: false
 authors: []
 description: java基础
