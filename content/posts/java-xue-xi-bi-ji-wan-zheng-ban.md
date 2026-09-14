@@ -1,8 +1,8 @@
 ---
 title: Java 学习笔记
 subtitle: ''
-date: '2028-09-08T08:33:29+08:00'
-lastmod: '2026-09-14T14:00:11+08:00'
+date: '2026-09-14T21:55:49+08:00'
+lastmod: '2026-09-14T21:55:49+08:00'
 draft: false
 authors: []
 description: java基础
@@ -36,7 +36,7 @@ license: 本文采用 <a rel="license" href="https://creativecommons.org/license
   - [第八章 面向对象高级（上）：继承、Object、final、抽象类与模板模式](#第八章-面向对象高级上继承objectfinal抽象类与模板模式)
   - [第九章 面向对象高级（下）：接口、多态、代码块、内部类与 Lambda](#第九章-面向对象高级下接口多态代码块内部类与-lambda)
   - [第10章 常用 API（String、StringBuilder、ArrayList）与综合案例](#第10章-常用-apistringstringbuilderarraylist与综合案例)
-
+21
 - **第二部分 · JavaSE 进阶**
   - [第十一章 面向对象进阶（一）：static 与继承](#第十一章-面向对象进阶一static-与继承)
   - [第十二章 面向对象进阶（二）：多态、final、抽象类与接口](#第十二章-面向对象进阶二多态final抽象类与接口)
@@ -55,7 +55,7 @@ license: 本文采用 <a rel="license" href="https://creativecommons.org/license
 - **附 录**
   - [附录 A 练习题与参考答案](#附录-a-练习题与参考答案)
 
----
+---1 
 # 第一部分 · Java 基础
 
 <div style="page-break-after: always;"></div>
@@ -63,7 +63,7 @@ license: 本文采用 <a rel="license" href="https://creativecommons.org/license
 ## 第1章 Java开发环境与IDEA
 
 ### 课程导览：AI 新时代为什么学 Java
-
+2 
 **AI（Artificial Intelligence，人工智能）大模型**是指具有极大规模、高度复杂性和强大能力的人工智能系统。围绕大模型的工作方向主要有：
 
 - **开发大模型**：开发大模型本身、打造智能产品；
@@ -102,9 +102,9 @@ Java 基本上什么都能做，主要用于**企业级应用开发**，常见�
 ### 1.2 JDK、JRE 与 JVM
 
 开发 Java 程序必须先安装好 **JDK**（Java Development Kit，Java 开发工具包）。三者关系：
-
+2 
 - **JVM**（Java Virtual Machine，Java 虚拟机）：真正运行 Java 程序的地方。
-- **JRE**（Java Runtime Environment，Java 运行环境）：包含 JVM 和运行 Java 程序所需的核心类库，只能运行程序，不能开发。
+- **JRE**（Java Runtime Environment，Java 运行环境）：包含 JVM 和运行 Java 程序所需的核心类库，只能运行程序，不能开发。2    
 - **JDK**（Java Development Kit，Java 开发工具包）：包含 JRE 以及编译、运行、调试等开发工具（javac、java 等），是 Java 开发的完整工具集。
 
 关系：**JDK > JRE > JVM**。安装 JDK 后，就可以用 javac 编译代码、用 java 运行程序，并使用丰富的 Java 类库开发应用。
