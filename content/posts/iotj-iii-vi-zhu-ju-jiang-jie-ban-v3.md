@@ -1,8 +1,8 @@
 ---
 title: IoT-J 论文逐句讲解版（本轮优化阅读版 v3）
 subtitle: ''
-date: '2026-10-08T21:09:48+08:00'
-lastmod: '2026-10-08T21:09:48+08:00'
+date: '2026-10-08T22:09:53+08:00'
+lastmod: '2026-10-08T22:09:53+08:00'
 draft: false
 authors: []
 description: 论文草稿
@@ -183,6 +183,8 @@ F 是操作数、D 是执行访存量、W/S 是存储容量、V 是边界载荷�
 
 > Let $\bar M_i$ denote the memory allocation, in bytes, available to the inference service after excluding operating-system and non-service allocations.
 
+***这里的mi不是模型权重吗？***
+
 **中文意思：** 上横线 M_i 表示扣除操作系统和非本服务占用后，可分配给推理服务的内存字节数。
 
 **讲解 / 作用：** 它是服务额度，不是设备标称总容量。上横线表示给定预算，不表示平均值；与 IV 的需求 M_i 比较。
@@ -205,6 +207,8 @@ F 是操作数、D 是执行访存量、W/S 是存储容量、V 是边界载荷�
 
 **中文意思：** 上横线 E_i>0 表示设备每个请求的增量能量预算，单位焦耳。
 
+**（ 给每个请求都要建立预算合适吗 ）**
+
 **讲解 / 作用：** 能量 J 与功率 W 不同：能量是累计消耗，功率是消耗速度。此预算仅约束随后定义的核算项，不是整机电池电量。
 
 <a id="s10"></a>
@@ -212,6 +216,8 @@ F 是操作数、D 是执行访存量、W/S 是存储容量、V 是边界载荷�
 #### S10
 
 > Device selection, execution order, and host-accelerator co-scheduling are fixed inputs.
+
+**（我们不涉及设备选择吧，执行顺序是固定的吧、加速器的协同调度是什么意思）**
 
 **中文意思：** 设备选择、执行顺序和主机与加速器的协同调度作为固定输入。
 
@@ -222,6 +228,8 @@ F 是操作数、D 是执行访存量、W/S 是存储容量、V 是边界载荷�
 #### S11
 
 > The single-device baseline has no inter-device communication.
+
+**这感觉是一句废话**
 
 **中文意思：** 单设备比较情形不存在设备间通信。
 
