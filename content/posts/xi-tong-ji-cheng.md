@@ -1,8 +1,8 @@
 ---
 title: 系统集成
 subtitle: ''
-date: '2026-09-14T20:29:13+08:00'
-lastmod: '2026-09-14T20:45:14+08:00'
+date: '2026-09-15T15:12:18+08:00'
+lastmod: '2026-09-15T15:12:18+08:00'
 draft: false
 authors: []
 description: 中
@@ -35,8 +35,9 @@ license: 本文采用 <a rel="license" href="https://creativecommons.org/license
 | 质量属性 | 概念 |
 | --- | --- |
 | 精确性|对事务状态描述的精确程度|
-**信息的传输模型**
-![图片](https://oldergao.github.io/blog-images/images/2026/09/730b89ac83b740b7.jpg)
+
+
+
 
 **这里后面补充各个环节名词的解释**
 
