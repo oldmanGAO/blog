@@ -1,8 +1,8 @@
 ---
 title: IoT-J 论文逐句讲解版（本轮优化阅读版 v3）
 subtitle: ''
-date: '2026-10-09T08:26:27+08:00'
-lastmod: '2026-10-09T08:26:27+08:00'
+date: '2026-10-09T11:19:52+08:00'
+lastmod: '2026-10-09T11:19:52+08:00'
 draft: false
 authors: []
 description: 论文草稿
@@ -433,7 +433,7 @@ $$
 
 **中文意思：** 当输出不止一个 token 时，decode 包含 G−1 个串行步骤。
 
-**讲解 / 作用：** 例如输出 4 个 token，需要 prefill 产生第 1 个，decode 再产生 3 个；这是讲解计数，不是实验数据。
+**讲解 / 作用：** 例如输出 4 个 token，需要 prefill 产生第 1 个，decode 再产生 3 个；这是讲解计数，不是实验数据。 
 
 <a id="s28"></a>
 
@@ -523,6 +523,8 @@ $$
 
 **用途 / 条件 / 示例：** G_hat 进入时延目标；G_cap 进入约束。讲解例：预测 12.4、上限 10，最终估计为 10，并非保证真实长度恰为 10。
 
+**这里的进入时延目标是什么意思？**
+
 <a id="s34"></a>
 
 #### S34
@@ -532,6 +534,7 @@ $$
 **中文意思：** round 四舍五入到最近整数，Π 把结果截断到 [1,G_cap]。
 
 **讲解 / 作用：** 先整数化，再限制合法范围。下限保证至少一个输出，上限保证预测服务长度不超过服务硬上限。
+**文中的G_cap、G_hat、G分别用来干什么，有什么用，我想我们可以再讨论一下**
 
 <a id="s35"></a>
 
@@ -549,6 +552,8 @@ $$
 
 > The workload includes one request from the initial user turn of each conversation.
 
+**这句话不知道是什么意思**
+
 **中文意思：** 所考虑的负载从每个会话的首次用户轮次取一个请求。
 
 **讲解 / 作用：** 替换不自然的 first-user prompt；请求输入仍按目标聊天模板处理，P 包括模板处理后的全部输入 token。没有改动数据或实验协议。
@@ -558,6 +563,8 @@ $$
 #### S37
 
 > The prediction determines the latency estimate used for resource allocation, while ${G_{\mathrm{cap}}}$ determines the energy and memory requirements used for admission.
+
+**这里也是，文中的G_cap、G_hat、G分别用来干什么，有什么用，我想我们可以再讨论一下**
 
 **中文意思：** 预测长度用于资源优化的时延估计，硬上限用于准入所需的能量和内存检查。
 
@@ -572,6 +579,9 @@ $$
 **中文意思：** 历史真实 G 仅在分区校准时评价已经依据到达信息选定的资源。
 
 **讲解 / 作用：** 先按 P、G_hat 选资源，再用历史 G 算实际长度下的代价，顺序不能反过来。
+
+**这里我再补充一下逻辑，利用大量已知真实的历史的G，去确定分区。利用预测G去优化方程里面针对每请求去解优化方程优化**
+
 
 <a id="s39"></a>
 
@@ -608,6 +618,8 @@ $$
 **中文意思：** 控制变量是设备 i 在阶段 s 的 GPU 核心频率 f_i^s 和发射功率 p_i^s，单位分别为 Hz 与 W。
 
 **讲解 / 作用：** f 控制计算资源，p 控制无线发送。功率 p 是射频输出功率，后面还要考虑放大器效率和电路功率。
+
+**这里要强调是设备wifi的发射功率，不要直接说是发射功率**
 
 <a id="s42"></a>
 
@@ -648,6 +660,8 @@ $$
 **中文意思：** 内存频率固定。
 
 **讲解 / 作用：** 只优化 GPU 核心频率，不优化内存时钟；这不表示内存访存没有成本。
+
+**这代表我们没有考虑访存开销吗？不对吧，我们后面的屋顶线模型里面，prefill和decoding阶段，每步延迟都是用的计算开销和访存开销的最大值，不对吗？你再斟酌一下用词**
 
 <a id="s46"></a>
 
@@ -694,6 +708,8 @@ $$
 #### S49
 
 > The AP transmit power, denoted by $p_{\mathrm{AP}}$, is fixed.
+
+**没看懂，为什么又有个固定发射功率？**
 
 **中文意思：** AP 发射功率 p_AP 固定。
 
@@ -748,6 +764,7 @@ $$
 **中文意思：** 并发请求调度、设备间流水线、推测解码、前缀复用、动态量化和路由不在当前设定内。
 
 **讲解 / 作用：** 这是问题边界。不能在解释或比较中悄悄利用这些机制来改变原公式的执行次数和消息量。
+**这个有必要说吗？去掉这句话吧，没意义**
 
 <a id="s55"></a>
 
@@ -758,6 +775,8 @@ $$
 **中文意思：** E_i^acct 表示设备 i 执行一个请求的模型增量能量。
 
 **讲解 / 作用：** acct 是 accounted 的核算标签，提醒它不是全设备总能量；V 节会展开具体项。
+
+**模型的增量能量是什么意思？**
 
 <a id="s56"></a>
 
@@ -838,6 +857,8 @@ $$
 **中文意思：** AP 发射功率固定。
 
 **讲解 / 作用：** 设备发射功率可变与 AP 功率固定可以同时成立；两跳通信分别使用不同的功率参数。
+
+**需要你再给我讲一下**
 
 <a id="section-64"></a>
 
@@ -931,6 +952,8 @@ F/D/W/S/V 的职责及组级核算的重要性。
 
 **讲解 / 作用：** 权重由架构和精度决定；状态由类型、上下文和格式决定。二者均是容量，而不是访存流量。
 
+**这里有点看不懂**
+
 <a id="s72"></a>
 
 #### S72
@@ -987,6 +1010,8 @@ F/D/W/S/V 的职责及组级核算的重要性。
 
 > Let $\mathcal{O}_i^s(\mathbf{c},q)$ denote the ordered collection of operator groups executed by device $i$ in phase $s$ at length $q$.
 
+**算子组集合是什么意思？这个概念我有些不懂**
+
 **中文意思：** O_i^s(c,q) 是设备 i 在给定分区、阶段、长度下按顺序执行的算子组集合。
 
 **讲解 / 作用：** 它把解码层和端点算子统一起来。ordered 表示执行有序，后续时间按组累加。
@@ -996,6 +1021,8 @@ F/D/W/S/V 的职责及组级核算的重要性。
 #### S78
 
 > For operator group $o\in\mathcal{O}_i^s$, let $F_{io}^s(q)$ and $D_{io}^s(q)$ denote its FLOP count and effective memory traffic, and let $t_{io}^s$ and $e_{io}^s$ denote its execution time in seconds and incremental energy consumption in joules.
+
+**这里的t之前是不是出现过，是不是存在一个字母表示了两种意思的情况**
 
 **中文意思：** 对于组 o，F、D 分别是计算和访存量，t、e 分别是执行秒数和增量焦耳数。
 
@@ -1073,6 +1100,8 @@ F/D/W/S/V 的职责及组级核算的重要性。
 
 > The operator-level specification must identify tensor dimensions, weight and inference-state sizes, temporary-buffer lifetimes, and boundary activations for the chosen model and runtime revisions.
 
+**我们在建模阶段是固定的模型吗？我们实验阶段确实固定模型，但是在理论建模阶段我们是吗？可以再讨论，斟酌斟酌**
+
 **中文意思：** 算子说明必须针对固定模型和运行时版本记录维度、权重/状态大小、临时缓冲寿命及边界激活。
 
 **讲解 / 作用：** 这是复现接口要求；must 不是已完成声明。缓冲寿命决定能否复用，直接影响峰值内存。
@@ -1083,6 +1112,8 @@ F/D/W/S/V 的职责及组级核算的重要性。
 
 > Each quantity requires either a source-backed derivation or an explicit modeling assumption.
 
+**这是我们的目标或者是要求吧，写在正文里怪怪的**
+
 **中文意思：** 每项量必须有来源支持的推导，或明确建模假设。
 
 **讲解 / 作用：** 架构可推导量和经验有效量要区分；不能把缺少依据的数写成真实测量。
@@ -1092,6 +1123,8 @@ F/D/W/S/V 的职责及组级核算的重要性。
 #### S87
 
 > For Qwen3.5-4B, full-attention and recurrent layers require different inference-state and computation models [cite: qwen35_4b_config,qwen35_hf_docs].
+
+**理论建模阶段不用上来就写固定模型**
 
 **中文意思：** Qwen3.5-4B 的全注意力层和循环层需要不同的计算与状态模型。
 
@@ -1273,6 +1306,8 @@ $$
 
 > The selected count must match the attention kernel used to specify effective throughput.
 
+**这里有点看不懂，选用的操作计数必须匹配确定有效吞吐时所采用的注意力内核**
+
 **中文意思：** 选用的操作计数必须匹配确定有效吞吐时所采用的注意力内核。
 
 **讲解 / 作用：** 若内核跳过上三角，就不能同时使用密集乘法的计数和不相容的吞吐系数。
@@ -1340,6 +1375,8 @@ $$
 **中文意思：** 附录给出目标模型专属张量细节。
 
 **讲解 / 作用：** 正文此处明确需要实现信息，不假造新的循环层成本表达式。
+
+**正文此处明确需要实现信息，不假造新的循环层成本表达式你这句话是什么意思** 
 
 <a id="s107"></a>
 
@@ -1454,6 +1491,8 @@ $$
 $$
 \mathcal{Q}(P,G)=\{(\mathrm{pre},P)\}\cup\{(\mathrm{dec},P+t):1\leq t<G\}
 $$
+
+**这个公式我看不懂，这代表什么？**
 
 **符号与单位：** 每个元素是一对 (阶段,执行长度)。Q 是形状集合，不是计算量或资源集合。
 
@@ -1617,6 +1656,8 @@ $$
 
 > Both coefficients are positive and refer to the specified operator group and execution shape.
 
+**这里描述的不够细致，我看不懂**
+
 **中文意思：** 两个系数为正，并对应指定组和执行形状。
 
 **讲解 / 作用：** 不能把某一种张量形状的有效系数无说明地套到另一形状。
@@ -1636,6 +1677,8 @@ $$
 #### S129
 
 > The bandwidth coefficient uses the same memory-transfer boundary as $D_{\ell r}^s$.
+
+**同一传输边界是什么意思**
 
 **中文意思：** 带宽系数与 D 使用同一传输边界。
 
@@ -1924,6 +1967,8 @@ $$
 #### S153
 
 > Let $R_i(p)$ denote the modeled transmission rate, in bits per second, on the link between device $i$ and the AP at radio-frequency output power $p$ watts.
+
+**无线传输我们模拟了一个什么过程？是不是分为上传和下载两部分时间建模，还是什么？**
 
 **中文意思：** R_i(p) 是设备 i 与 AP 链路在射频输出功率 p W 下的模型速率，单位 bit/s。
 
@@ -2510,6 +2555,8 @@ $$
 **为什么这样写：** 先一个 prefill 的全部设备，再 G−1 次 decode 的全部设备，再所有消息。无跨设备、计算通信重叠，因此可直接累加。
 
 **用途 / 条件 / 示例：** 选资源时用 G_hat；历史评分或实际长度评价时用 G。起终点为开始 prefill 到末设备最后 token 就绪，不自动包含控制时间与用户交付。
+
+**这里的通信项是什么？**
 
 <a id="s198"></a>
 
@@ -3346,3 +3393,7 @@ $$
 本讲解忠实说明上述线上版本的定义与假设，不把模型接口要求写成已经完成的测量或验证。公式卡中的换行、临时省略参数和英文标签为教学排版转换，均在卡片中注明；没有修改 Overleaf 论文。若线上稿后续改变，原稿公式编号可能变化，可用 S/E 编号及小节标题继续定位。
 
 方法说明：采用 latex-paper-en 的原意与事实保护原则、math-reasoning 的符号/单位/边界检查，以及 PDF 技能的生成和渲染核对流程。本材料不引入新的文献结论、实验结果、模型替换或实验协议。
+
+
+
+**还有建议，最终的优化方程以及限制条件你最后需要把每一项都展开，展到最开，不能像现在一样是简写形式**
