@@ -1,8 +1,8 @@
 ---
 title: IoT-J 论文逐句讲解版（本轮优化阅读版 v3）
 subtitle: ''
-date: '2026-10-08T22:09:53+08:00'
-lastmod: '2026-10-08T22:09:53+08:00'
+date: '2026-10-09T08:26:27+08:00'
+lastmod: '2026-10-09T08:26:27+08:00'
 draft: false
 authors: []
 description: 论文草稿
@@ -329,6 +329,8 @@ $$
 
 > Only the assigned model weights and required runtime data are stored in accelerator-accessible memory during inference.
 
+**加速器是什么意思？大家都这么写吗？**
+
 **中文意思：** 推理期间，加速器可访问内存中只存放该设备分到的权重和必需运行数据。
 
 **讲解 / 作用：** 不是每台设备都保存完整模型。accelerator-accessible 说明这些数据能被建模的加速器使用，不据此断言某个具体内存体系。
@@ -395,6 +397,8 @@ $$
 
 > Let $P$ denote the number of prompt tokens after applying the target model's chat template.
 
+**模板中的角色和特殊token会影响输入长度，这句话是什么意思？**
+
 **中文意思：** P 是应用目标模型聊天模板后的输入 token 数。
 
 **讲解 / 作用：** 应数实际进入模型的序列，而不是原始文本字符数。模板中的角色和特殊 token 会影响输入长度。
@@ -404,6 +408,8 @@ $$
 #### S25
 
 > Let ${G_{\mathrm{cap}}}\geq1$ be the service's enforced integer upper limit on the number of generated tokens, and let $G\in\{1,\ldots,{G_{\mathrm{cap}}}\}$ denote the realized output length.
+
+**我对G_cap还有点不知道是什么意思，有什么必要搞这个G_cap**
 
 **中文意思：** G_cap≥1 是服务强制执行的整数生成上限；G 是 1 至 G_cap 中的实际输出 token 数。
 
